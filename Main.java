@@ -8,7 +8,7 @@ class Main extends JFrame implements ActionListener{
     int fwidth = 900, fheight = 600;    //Initial width and height of frame
     int field_height = 25;              //Height used by all fields
     Container c;
-    JLabel name,DOB,mobile,gender,password;
+    JLabel name,DOB,mobile,gender,password, errors;
     JTextField tname,tDOB,tmobile,tpassword;
     String sname,sDOB,smobile,sgender,spassword;
     JButton submit;
@@ -81,7 +81,11 @@ class Main extends JFrame implements ActionListener{
         submit.setBackground(red_color);
         submit.addActionListener(this);
         c.add(submit);
-        
+
+        errors = new JLabel("", SwingConstants.CENTER);
+        errors.setBackground(dark_color);
+        errors.setForeground(text_color);
+        c.add(errors);
         //Resize listener:
         /*
             Settings:
@@ -134,6 +138,9 @@ class Main extends JFrame implements ActionListener{
                 // Submit button will be different, roughly centered
                 submit.setSize((int)fwidth*7/10, (int)3*field_height/2);
                 submit.setLocation((int)fwidth*15/100, start_height+getOffset(5));
+
+                errors.setSize((int)fwidth*7/10, (int)3*field_height/2);
+                errors.setLocation((int)fwidth*15/100, start_height+getOffset(6));
             }    
         }
         );
@@ -151,25 +158,32 @@ class Main extends JFrame implements ActionListener{
     
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==submit){
-
+            errors.setText(""); //Clear errors initially on submit
             sname=tname.getText();
             smobile=tmobile.getText();
             sDOB=tDOB.getText();
-            if(male.isSelected()){
-                sgender="Male";
+            if(male.isSelected()){sgender="Male";}
+            else if(female.isSelected()){sgender="Female";}
+            else if(others.isSelected()){sgender="Others";}
+            if(sname.isBlank() || smobile.isBlank() || sDOB.isBlank()){
+                errors.setText(errors.getText() + "Please fill out all fields! ");
+            } 
+            if((sDOB.split("-").length != 3 && sDOB.split("/").length != 3) && !sDOB.isBlank()){ //if isBlank err has occured, this should not
+                errors.setText(errors.getText() + "Invalid DOB format! ");
             }
-            else if(female.isSelected()){
-                sgender="Female";
+            if(!smobile.matches("[0-9]*")){
+                errors.setText(errors.getText() + "Mobile numbers should be numbers only! ");
+            } 
+            if((smobile.length() != 10) && !(smobile.isEmpty())){   //if isBlank error has occured, this should not
+                errors.setText(errors.getText() + "Mobile numbers should be 10 digits long! ");
             }
-            else if(others.isSelected()){
-                sgender="Others";
+            if(errors.getText().isEmpty()){
+                Main5 m=new Main5(sname,smobile,sDOB,sgender);
+                m.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                m.setBounds(300, 90, fwidth, fheight);
+                m.setVisible(true);
+                m.setTitle("MiniProject");
             }
-
-            Main5 m=new Main5(sname,smobile,sDOB,sgender);
-            m.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            m.setBounds(300, 90, fwidth, fheight);
-            m.setVisible(true);
-            m.setTitle("MiniProject");
         }
     }
 
