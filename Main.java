@@ -175,35 +175,62 @@ class Main extends JFrame implements ActionListener{
 
 
 class Main5 extends JFrame{
-
+    int fwidth = 900, fheight = 600, field_height=25;
     Container c;
-    JTextField a,a1,a2,a3;
+    JLabel a,a1,a2,a3;
     JButton g;
     Color dark_color = new Color(38,38,38);
+    Color text_color = new Color(230, 245, 255);
+    Color red_color = new Color(202, 62, 71);
     Main5(String name,String mobile,String DOB,String gender){
         c = getContentPane();
         c.setBackground(dark_color);
         c.setLayout(null);
-        a=new JTextField("Name: "+name);
-        a.setSize(500,60);
-        a.setLocation(200,100);
 
-        a1=new JTextField("Mobile: "+mobile);
-        a1.setSize(500,60);
-        a1.setLocation(200,150);
+        a=new JLabel("Name: "+name);
+        a.setBackground(dark_color);
+        a.setForeground(text_color);
 
-        a2=new JTextField("Date of Birth: "+DOB);
-        a2.setSize(500,60);
-        a2.setLocation(200,200);
+        a1=new JLabel("Mobile: "+mobile);
+        a1.setBackground(dark_color);
+        a1.setForeground(text_color);
 
-        a3=new JTextField("Gender: "+gender);
-        a3.setSize(500,60);
-        a3.setLocation(200,250);
+        a2=new JLabel("Date of Birth: "+DOB);
+        a2.setBackground(dark_color);
+        a2.setForeground(text_color);
+
+        a3=new JLabel("Gender: "+gender);
+        a3.setBackground(dark_color);
+        a3.setForeground(text_color);
+        
         c.add(a);
         c.add(a1);
         c.add(a2);
         c.add(a3);
-       
+        c.addComponentListener(new ComponentAdapter(){
+        public int getOffset(int n){return n*(field_height+15);}//15 is padding/}
+        //Resize listener:
+        public void componentResized(ComponentEvent e) {
+            fwidth = c.getSize().width;
+            fheight = c.getSize().height;
+            // Recalculate all params dependent on viewport height/width
+            int start_height = (int)fheight/4;;
+            if(fheight < 500){start_height = (int)fheight/10;}  //Mimic media query use
+            int label_width = (int)fwidth*8/10;
+            int label_start_x = (int)fwidth/10; //start at 0.1 goto 0.9, end with 0.1 left
+
+            // Set size for all components according to new params
+            a.setSize(label_width, field_height);
+            a.setLocation(label_start_x, start_height);
+            a1.setSize(label_width, field_height);
+            a1.setLocation(label_start_x, start_height + getOffset(1));
+            a2.setSize(label_width, field_height);
+            a2.setLocation(label_start_x, start_height + getOffset(2));
+            a3.setSize(label_width, field_height);
+            a3.setLocation(label_start_x, start_height + getOffset(3));
+        }    
+    }
+    );
         
    }
     
