@@ -123,36 +123,32 @@ class Main5 extends JFrame{
     Container c;
     JTextField a,a1,a2,a3;
     JButton g;
+    Color dark_color = new Color(38,38,38);
     Main5(String name,String mobile,String DOB,String gender){
-        c=getContentPane();
+        c = getContentPane();
+        c.setBackground(dark_color);
         c.setLayout(null);
-
         a=new JTextField("Name: "+name);
-        a.setSize(200,75);
+        a.setSize(500,60);
         a.setLocation(200,100);
-        c.add(a);
 
         a1=new JTextField("Mobile: "+mobile);
-        a1.setSize(200,75);
+        a1.setSize(500,60);
         a1.setLocation(200,150);
-        c.add(a1);
 
         a2=new JTextField("Date of Birth: "+DOB);
-        a2.setSize(200,75);
+        a2.setSize(500,60);
         a2.setLocation(200,200);
-        c.add(a2);
 
         a3=new JTextField("Gender: "+gender);
-        a3.setSize(200,75);
+        a3.setSize(500,60);
         a3.setLocation(200,250);
+        c.add(a);
+        c.add(a1);
+        c.add(a2);
         c.add(a3);
+       
         
    }
-
-   
-
-   
-
-    
     
 }
