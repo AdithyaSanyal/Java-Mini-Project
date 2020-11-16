@@ -1,5 +1,7 @@
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.Border;
+
 import java.awt.event.*;
 
 class Main extends JFrame implements ActionListener{
@@ -182,6 +184,7 @@ class Main5 extends JFrame{
     Color dark_color = new Color(38,38,38);
     Color text_color = new Color(230, 245, 255);
     Color red_color = new Color(202, 62, 71);
+    Border rBorderUnderline = BorderFactory.createMatteBorder(0, 0, 1, 0, red_color);
     Main5(String name,String mobile,String DOB,String gender){
         c = getContentPane();
         c.setBackground(dark_color);
@@ -190,19 +193,23 @@ class Main5 extends JFrame{
         a=new JLabel("Name: "+name);
         a.setBackground(dark_color);
         a.setForeground(text_color);
+        a.setBorder(rBorderUnderline);
 
         a1=new JLabel("Mobile: "+mobile);
         a1.setBackground(dark_color);
         a1.setForeground(text_color);
+        a1.setBorder(rBorderUnderline);
 
         a2=new JLabel("Date of Birth: "+DOB);
         a2.setBackground(dark_color);
         a2.setForeground(text_color);
+        a2.setBorder(rBorderUnderline);
 
         a3=new JLabel("Gender: "+gender);
         a3.setBackground(dark_color);
         a3.setForeground(text_color);
-        
+        a3.setBorder(rBorderUnderline);
+
         c.add(a);
         c.add(a1);
         c.add(a2);
